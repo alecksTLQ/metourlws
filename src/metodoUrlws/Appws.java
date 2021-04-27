@@ -1,13 +1,16 @@
 package metodoUrlws;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Properties;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -17,11 +20,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
  
  
-/**
- * @author jmcneil
- * (c) copyright Software Pulse 2020
- *
- */
+
 public class Appws {
  
     /**
@@ -30,9 +29,30 @@ public class Appws {
     public static void main(String[] args) {
         Appws testHelloAge = new Appws();
         testHelloAge.geHelloAge();
+    	
     }
  
      
+    
+    public static void leerArchivo() {
+    	Properties propiedades = new Properties();
+    	InputStream entrada = null;
+    	
+    	try {
+    		entrada = new FileInputStream("datos.properties");
+    		propiedades.load(entrada);
+    		
+    		System.out.println(propiedades.getProperty("nombre"));
+    		System.out.println(propiedades.getProperty("telefono"));
+    		
+    	}catch(IOException e) {
+    		e.printStackTrace();
+    	}
+    }
+    
+    
+    
+    
     public void geHelloAge() {
         String wsURL = "https://10.16.0.250:9980/wsTSEservicios/wsDefuncion.asmx";
         URL url = null;
@@ -56,13 +76,6 @@ public class Appws {
         		+ "    </Consulta_Defunciones_En_Linea>\r\n"
         		+ "  </soap:Body>\r\n"
         		+ "</soap:Envelope>";
-        
-        /*String xmlInput = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n"
-		        		+ "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n"
-		        		+ "  <soap:Body>\r\n"
-		        		+ "    <TipoCambioDia xmlns=\"http://www.banguat.gob.gt/variables/ws/\" />\r\n"
-		        		+ "  </soap:Body>\r\n"
-		        		+ "</soap:Envelope>";*/
          
         try
         {
